@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const authOptions: any = {
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
