@@ -15,8 +15,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check file type (be lenient: some browsers may send octet-stream)
-    const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-    const name = (file as any).name as string | undefined
+    const name = (file as File).name as string | undefined
     const ext = name ? name.toLowerCase().split('.').pop() : undefined
     const isPdf = file.type === 'application/pdf' || ext === 'pdf'
     const isDocx = file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || ext === 'docx'
