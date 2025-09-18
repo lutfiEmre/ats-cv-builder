@@ -120,22 +120,29 @@ export default function DashboardPage() {
             </Link>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <Link href="/cv/upload">
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <div className="bg-green-100 rounded-full p-3">
-                    <Upload className="h-6 w-6 text-green-600" />
-                  </div>
-                  <div>
-                    <CardTitle>Upload & Check CV</CardTitle>
-                    <CardDescription>
-                      Upload your existing CV for ATS analysis
-                    </CardDescription>
-                  </div>
+          <Card 
+            className="hover:shadow-lg transition-shadow cursor-pointer"
+            onClick={() => {
+              if (status === 'authenticated') {
+                router.push('/cv/upload')
+              } else {
+                router.push('/auth/signin')
+              }
+            }}
+          >
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                <div className="bg-green-100 rounded-full p-3">
+                  <Upload className="h-6 w-6 text-green-600" />
                 </div>
-              </CardHeader>
-            </Link>
+                <div>
+                  <CardTitle>Upload & Check CV</CardTitle>
+                  <CardDescription>
+                    Upload your existing CV for ATS analysis
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
           </Card>
         </div>
 
@@ -144,12 +151,18 @@ export default function DashboardPage() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900">Your CVs</h2>
             {cvs.length > 0 && (
-              <Link href="/cv/create">
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create New CV
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => {
+                  if (status === 'authenticated') {
+                    router.push('/cv/create')
+                  } else {
+                    router.push('/auth/signin')
+                  }
+                }}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create New CV
+              </Button>
             )}
           </div>
 
@@ -164,18 +177,31 @@ export default function DashboardPage() {
                   Get started by creating your first ATS-optimized CV or uploading an existing one.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link href="/cv/create">
-                    <Button>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create New CV
-                    </Button>
-                  </Link>
-                  <Link href="/cv/upload">
-                    <Button variant="outline">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload CV
-                    </Button>
-                  </Link>
+                  <Button 
+                    onClick={() => {
+                      if (status === 'authenticated') {
+                        router.push('/cv/create')
+                      } else {
+                        router.push('/auth/signin')
+                      }
+                    }}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create New CV
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      if (status === 'authenticated') {
+                        router.push('/cv/upload')
+                      } else {
+                        router.push('/auth/signin')
+                      }
+                    }}
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload CV
+                  </Button>
                 </div>
               </CardContent>
             </Card>

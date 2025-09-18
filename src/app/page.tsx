@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -15,6 +17,8 @@ interface CV {
 }
 
 export default function HomePage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const [cvs, setCvs] = useState<CV[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -119,12 +123,18 @@ export default function HomePage() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900">Your CVs</h2>
             {cvs.length > 0 && (
-              <Link href="/cv/create">
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create New CV
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => {
+                  if (status === 'authenticated') {
+                    router.push('/cv/create')
+                  } else {
+                    router.push('/auth/signin')
+                  }
+                }}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create New CV
+              </Button>
             )}
           </div>
 
@@ -139,18 +149,31 @@ export default function HomePage() {
                   Get started by creating your first ATS-optimized CV or uploading an existing one.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link href="/cv/create">
-                    <Button>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create New CV
-                    </Button>
-                  </Link>
-                  <Link href="/cv/upload">
-                    <Button variant="outline">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload CV
-                    </Button>
-                  </Link>
+                  <Button 
+                    onClick={() => {
+                      if (status === 'authenticated') {
+                        router.push('/cv/create')
+                      } else {
+                        router.push('/auth/signin')
+                      }
+                    }}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create New CV
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      if (status === 'authenticated') {
+                        router.push('/cv/upload')
+                      } else {
+                        router.push('/auth/signin')
+                      }
+                    }}
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload CV
+                  </Button>
                 </div>
               </CardContent>
             </Card>
