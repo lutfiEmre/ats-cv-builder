@@ -110,9 +110,20 @@ export default function UploadCVPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <div className="flex items-center space-x-2">
-                <FileText className="h-6 w-6 text-blue-600" />
-                <span className="font-bold text-xl text-gray-900">ATS CV Maker</span>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <FileText className="h-6 w-6 text-blue-600" />
+                  <span className="font-bold text-xl text-gray-900">ATS CV Maker</span>
+                </div>
+                <span className="text-gray-400">by</span>
+                <a 
+                  href="https://emrelutfi.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                >
+                  emrelutfi.com
+                </a>
               </div>
             </div>
           </div>
