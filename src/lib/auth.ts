@@ -1,4 +1,24 @@
-import type { NextAuthOptions } from 'next-auth'
+// NextAuth options type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface NextAuthOptions {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  adapter?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  providers: any[]
+  session: {
+    strategy: 'jwt' | 'database'
+  }
+  pages?: {
+    signIn?: string
+    signUp?: string
+  }
+  callbacks?: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    jwt?: (params: any) => any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    session?: (params: any) => any
+  }
+}
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from './prisma'
