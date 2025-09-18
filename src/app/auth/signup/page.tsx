@@ -71,9 +71,22 @@ export default function SignUpPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <FileText className="h-8 w-8 text-blue-600" />
-            <span className="font-bold text-2xl text-gray-900">ATS CV Maker</span>
+          <div className="flex flex-col items-center justify-center mb-4">
+            <div className="flex items-center space-x-2">
+              <FileText className="h-8 w-8 text-blue-600" />
+              <span className="font-bold text-2xl text-gray-900">ATS CV Maker</span>
+            </div>
+            <div className="flex items-center space-x-2 mt-2">
+              <span className="text-sm text-gray-400">by</span>
+              <a 
+                href="https://emrelutfi.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              >
+                emrelutfi.com
+              </a>
+            </div>
           </div>
           <CardTitle>Create Account</CardTitle>
           <CardDescription>

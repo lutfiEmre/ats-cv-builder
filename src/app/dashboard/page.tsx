@@ -60,7 +60,7 @@ export default function DashboardPage() {
               <div className="flex items-center">
                 <div className="flex items-center space-x-2">
                   <FileText className="h-6 w-6 text-blue-600" />
-                  <span className="font-bold text-xl text-gray-900">ATS CV Maker</span>
+                  <span className="font-bold text-xl text-gray-900">ATS CV Maker by SeoProgram</span>
                 </div>
               </div>
             </div>

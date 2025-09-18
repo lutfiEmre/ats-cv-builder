@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ATS CV Maker - Build ATS-Optimized Resumes",
+  title: "ATS CV Maker by emrelutfi.com - Build ATS-Optimized Resumes",
   description: "Create professional, ATS-friendly CVs that pass applicant tracking systems and get you noticed by employers.",
 };
 
