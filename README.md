@@ -35,12 +35,16 @@ npm install
 
 3. Set up environment variables
 ```bash
-cp .env.example .env.local
+cp env.example .env.local
 ```
-Add your NextAuth secret and database URL.
+Add your environment variables:
+- `NEXTAUTH_URL`: Your deployment URL (http://localhost:3000 for local)
+- `NEXTAUTH_SECRET`: A random secret key
+- `DATABASE_URL`: Your database connection string
 
 4. Set up the database
 ```bash
+npx prisma generate
 npx prisma db push
 ```
 
@@ -50,6 +54,23 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the application.
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. **Database Setup**: Create a PostgreSQL database (Vercel Postgres, Supabase, or PlanetScale)
+2. **Environment Variables** in Vercel dashboard:
+   - `NEXTAUTH_URL`: Your Vercel deployment URL
+   - `NEXTAUTH_SECRET`: Generate with `openssl rand -base64 32`
+   - `DATABASE_URL`: Your PostgreSQL connection string
+3. **Deploy**: Connect your GitHub repository to Vercel
+4. **Database Migration**: Run `npx prisma db push` after first deployment
+
+### Other Platforms
+- Ensure PostgreSQL database is available
+- Set environment variables
+- Run `npm run build` and `npm start`
 
 ## Usage
 
