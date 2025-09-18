@@ -1,3 +1,4 @@
+import React from 'react'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
@@ -14,7 +15,7 @@ export async function GET(
 ) {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions) as { user?: { id?: string } } | null
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -30,7 +31,7 @@ export async function GET(
     const cv = await prisma.cV.findFirst({
       where: {
         id: resolvedParams.id,
-        userId: session.user.id // Only allow exporting user's own CVs
+        userId: session.user!.id // Only allow exporting user's own CVs
       }
     })
 
@@ -42,9 +43,11 @@ export async function GET(
 
     if (format === 'pdf') {
       // Generate PDF
-      const pdfBuffer = await renderToBuffer(CVPDF({ data: cvData }))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const PDFDocument = React.createElement(CVPDF, { data: cvData }) as any
+      const pdfBuffer = await renderToBuffer(PDFDocument)
       
-      return new NextResponse(pdfBuffer, {
+      return new NextResponse(new Uint8Array(pdfBuffer), {
         headers: {
           'Content-Type': 'application/pdf',
           'Content-Disposition': `attachment; filename="${cv.title}.pdf"`,
@@ -55,7 +58,7 @@ export async function GET(
       const doc = generateDOCX(cvData)
       const docxBuffer = await Packer.toBuffer(doc)
       
-      return new NextResponse(docxBuffer, {
+      return new NextResponse(new Uint8Array(docxBuffer), {
         headers: {
           'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
           'Content-Disposition': `attachment; filename="${cv.title}.docx"`,

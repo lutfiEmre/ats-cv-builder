@@ -15,7 +15,12 @@ interface DatePickerProps {
   className?: string
 }
 
-const CustomInput = forwardRef<HTMLInputElement, any>(
+const CustomInput = forwardRef<HTMLInputElement, { 
+  value?: string; 
+  onClick?: () => void; 
+  placeholder?: string; 
+  className?: string 
+}>(
   ({ value, onClick, placeholder, className }, ref) => (
     <div className="relative">
       <Input

@@ -3,7 +3,7 @@ export interface ContactInfo {
   email: string
   phone: string
   address: string
-  linkedin: string
+  linkedin?: string
   website?: string
 }
 
@@ -12,7 +12,7 @@ export interface WorkExperience {
   company: string
   position: string
   startDate: string
-  endDate: string
+  endDate?: string
   current: boolean
   description: string
   location?: string

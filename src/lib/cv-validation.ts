@@ -5,8 +5,8 @@ export const contactInfoSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(1, 'Phone number is required'),
   address: z.string().min(1, 'Address is required'),
-  linkedin: z.string().optional().or(z.literal('')),
-  website: z.string().optional().or(z.literal(''))
+  linkedin: z.string().optional(),
+  website: z.string().optional()
 })
 
 export const workExperienceSchema = z.object({

@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions) as { user?: { id?: string } } | null
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -21,7 +21,7 @@ export async function GET(
     const cv = await prisma.cV.findFirst({
       where: {
         id: resolvedParams.id,
-        userId: session.user.id // Only allow access to user's own CVs
+        userId: session.user!.id // Only allow access to user's own CVs
       }
     })
 
@@ -45,7 +45,7 @@ export async function PUT(
 ) {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions) as { user?: { id?: string } } | null
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -99,7 +99,7 @@ export async function DELETE(
 ) {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions) as { user?: { id?: string } } | null
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },

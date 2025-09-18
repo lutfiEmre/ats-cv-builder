@@ -7,7 +7,7 @@ import { checkATSCompliance } from '@/lib/ats-checker'
 export async function POST() {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions) as { user?: { id?: string } } | null
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -266,7 +266,7 @@ export async function POST() {
     // Create test CV for authenticated user
     const cv = await prisma.cV.create({
       data: {
-        userId: session.user.id,
+        userId: session.user!.id,
         title: "Test CV - EmreLutfi Portfolio",
         jsonData: JSON.stringify(testCVData),
         atsScore: atsAnalysis.score

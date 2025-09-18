@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma'
 export async function GET() {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions) as { user?: { id?: string } } | null
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -16,7 +16,7 @@ export async function GET() {
 
     const cvs = await prisma.cV.findMany({
       where: {
-        userId: session.user.id
+        userId: session.user!.id
       },
       select: {
         id: true,

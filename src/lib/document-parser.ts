@@ -4,7 +4,7 @@ export async function parseDocument(file: File): Promise<string> {
   const buffer = Buffer.from(await file.arrayBuffer())
 
   // Some environments send application/octet-stream; detect by extension
-  const name = (file as any).name as string | undefined
+  const name = (file as File).name as string | undefined
   const ext = name ? name.toLowerCase().split('.').pop() : undefined
 
   const isPdf = file.type === 'application/pdf' || ext === 'pdf'
@@ -28,7 +28,11 @@ async function parsePDF(buffer: Buffer): Promise<string> {
   } catch {
     // Fallback using pdfjs-dist
     try {
-      const pdfjs: any = await import('pdfjs-dist/legacy/build/pdf.mjs')
+      const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs') as unknown as {
+        getDocument: (options: { data: Buffer; useWorker: boolean; isEvalSupported: boolean }) => {
+          promise: Promise<{ numPages: number; getPage: (i: number) => Promise<{ getTextContent: () => Promise<{ items: Array<{ str: string }> }> }> }>
+        }
+      }
       const loadingTask = pdfjs.getDocument({ data: buffer, useWorker: false, isEvalSupported: false })
       const doc = await loadingTask.promise
       let text = ''
@@ -36,7 +40,7 @@ async function parsePDF(buffer: Buffer): Promise<string> {
         const page = await doc.getPage(i)
         const content = await page.getTextContent()
         const pageText = content.items
-          .map((item: any) => (typeof item.str === 'string' ? item.str : ''))
+          .map((item) => (typeof item.str === 'string' ? item.str : ''))
           .join(' ')
         text += pageText + '\n'
       }
